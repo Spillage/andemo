@@ -29,6 +29,12 @@ class RijksTestApplicationTests {
     @Value("${base.userset.id}")
     private String usersetId;
 
+    @Value("${base.OAI-PMH.url}")
+    private String OAIPMHurl;
+
+    @Value("${base.OAI-PMH.key}")
+    private String OAIPMHVerbs;
+
     HttpUtil httpUtil = new HttpUtil();
 
     @Test
@@ -169,5 +175,15 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureNL + "/usersets/" + usersetId + "?key="+key+"&format=json";
         String result = httpUtil.doGet(url);
         assert result.contains("Invalid key");
+    }
+
+    @Test
+    public void testOAI_PMHVerbs() {
+        String[] verb = OAIPMHVerbs.split(",");
+        for (String v : verb) {
+            String url = OAIPMHurl + "?verb=" + v;
+            String result = httpUtil.doGet(url);
+            assert result.contains("OAI-PMH");
+        }
     }
 }
