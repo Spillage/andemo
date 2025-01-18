@@ -1,12 +1,19 @@
 package org.luxie.rijkstest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luxie.rijkstest.tools.HttpUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Random;
+
+@Slf4j
 @SpringBootTest
 class RijksTestApplicationTests {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RijksTestApplicationTests.class.getName());
 
     @Value("${base.url}")
     private String baseURL;
@@ -29,10 +36,10 @@ class RijksTestApplicationTests {
     @Value("${base.userset.id}")
     private String usersetId;
 
-    @Value("${base.OAI-PMH.url}")
+    @Value("${base.OAIPMH.url}")
     private String OAIPMHurl;
 
-    @Value("${base.OAI-PMH.key}")
+    @Value("${base.OAIPMH.verbs}")
     private String OAIPMHVerbs;
 
     HttpUtil httpUtil = new HttpUtil();
@@ -184,6 +191,22 @@ class RijksTestApplicationTests {
             String url = OAIPMHurl + "?verb=" + v;
             String result = httpUtil.doGet(url);
             assert result.contains("OAI-PMH");
+        }
+    }
+
+    @Test
+    public void testOAI_PMHPerformance() {
+        String[] verb = OAIPMHVerbs.split(",");
+        Random random = new Random();
+        for(int i = 0;i < 100;i++){
+            int temp = random.nextInt(verb.length);
+            String url = OAIPMHurl + "?verb=" + verb[temp];
+            long startTime = System.currentTimeMillis();
+            String result = httpUtil.doGet(url);
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime;
+            assert duration < 1000;
+            LOGGER.debug("Duration: " + duration + "ms");
         }
     }
 }
