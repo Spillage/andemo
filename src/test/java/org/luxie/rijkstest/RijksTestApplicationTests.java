@@ -110,10 +110,14 @@ class RijksTestApplicationTests {
 
     @Test
     public void testCollectionObjectCultureENWithValidKey() {
-        String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;
+        String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;git
         String result = httpUtil.doGet(url);
         JSONObject json = JSON.parseObject(result);
-        assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
+        if(json.containsKey("artObject")){
+            assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
+        } else {
+            assert false;
+        }
     }
 
     @Test
@@ -121,7 +125,11 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureNL + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
         JSONObject json = JSON.parseObject(result);
-        assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
+        if(json.containsKey("artObject")){
+            assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
+        } else {
+            assert false;
+        }
     }
 
     @Test
