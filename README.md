@@ -1,6 +1,6 @@
 # ReadMe
 
-## Some conclutions
+## Some conclusions
 
 - It seems like not all APIs share the same filter or interceptor for key checking.
   - For example: 
