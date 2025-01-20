@@ -238,14 +238,16 @@ class RijksTestApplicationTests {
     public void testUsersetDetailCultureENWithValidKey() {
         String url = baseURL + "/api/" + cultureEN + "/usersets/" + usersetId + "?key="+key+"&format=json";
         String result = httpUtil.doGet(url);
-        assert result.contains("userSet");
+        int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSet");
+        assert domResult == 1;
     }
 
     @Test
     public void testUsersetDetailCultureNLWithValidKey() {
         String url = baseURL + "/api/" + cultureNL + "/usersets/" + usersetId + "?key="+key+"&format=json";
         String result = httpUtil.doGet(url);
-        assert result.contains("userSet");
+        int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSet");
+        assert domResult == 1;
     }
 
     @Test
@@ -268,7 +270,28 @@ class RijksTestApplicationTests {
         for (String v : verb) {
             String url = OAIPMHurl + "?verb=" + v;
             String result = httpUtil.doGet(url);
-            assert result.contains("OAI-PMH");
+            switch (v) {
+                case "Identify":
+                    assert result.contains("Identify");
+                    break;
+                case "ListMetadataFormats":
+                    assert result.contains("ListMetadataFormats");
+                    break;
+                case "ListSets":
+                    assert result.contains("ListSets");
+                    break;
+                case "ListIdentifiers":
+                    assert result.contains("ListIdentifiers");
+                    break;
+                case "ListRecords":
+                    assert result.contains("ListRecords");
+                    break;
+                case "GetRecord":
+                    assert result.contains("GetRecord");
+                    break;
+                default:
+                    assert false;
+            }
         }
     }
 
