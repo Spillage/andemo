@@ -110,7 +110,7 @@ class RijksTestApplicationTests {
 
     @Test
     public void testCollectionObjectCultureENWithValidKey() {
-        String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;git
+        String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
         JSONObject json = JSON.parseObject(result);
         if(json.containsKey("artObject")){
