@@ -23,7 +23,8 @@
 - For '/api{culture}/collection/{object-number}/tiles'
   - When search with an invalid object number, it returns 1 which is meaningless.
 - For '/api/{culture}/usersets'
-  - When request with different page\*pageSize(20\*3 & 20\*5), the first user is always the sender itself and then others, it is weird. 
+  - When request with different page\*pageSize(20\*3 & 20\*5), almost returns the same result, it is weird. 
+  - But if the parameter is 3\*3 or 4\*3, it returns correctly. I think there are rooms for the API to update.
   - When request with invalid page*pageSize(4\*5000), the response is random *pageSize* usersets, I think it is better to return 0.
   - When request with invalid page*pageSize(2\*10000), the response is 0, it is different from the previous one.
 - Why does the collection APIs return in JSON format but the usersets APIs return in XML format?
