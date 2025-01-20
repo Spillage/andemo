@@ -1,8 +1,8 @@
 package org.luxie.rijkstest;
 
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import com.alibaba.fastjson2.JSON;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.luxie.rijkstest.tools.DOMUtil;
 import org.luxie.rijkstest.tools.HttpUtil;
@@ -47,7 +47,7 @@ class RijksTestApplicationTests {
     @Value("${base.second.page.size}")
     private int pageSecondSize;
 
-    @Value("${base.page.suer.size}")
+    @Value("${base.page.super.size}")
     private int pageSuperSize;
 
     @Value("${base.userset.id}")
@@ -81,8 +81,8 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&involvedMaker=Rembrandt+van+Rijn";
         String result = httpUtil.doGet(url);
         //assert result.contains("count");
-        JSONObject json = JSON.parse(result);
-        assert json.get("count").greaterThan(0);
+        JSONObject json = JSON.parseObject(result);
+        assert json.getIntValue("count") > 0;
     }
 
     @Test
@@ -90,8 +90,8 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureNL + "/collection?key="+key+"&involvedMaker=Rembrandt+van+Rijn";
         String result = httpUtil.doGet(url);
         //assert result.contains("count");
-        JSONObject json = JSON.parse(result);
-        assert json.get("count").greaterThan(0);
+        JSONObject json = JSON.parseObject(result);
+        assert json.getIntValue("count") > 0;
     }
 
     @Test
@@ -112,34 +112,34 @@ class RijksTestApplicationTests {
     public void testCollectionObjectCultureENWithValidKey() {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
-        JsonObject json = JSON.parse(result);
-        assert json.get("artObject").get("objectNumber").equals(objectNumber);
+        JSONObject json = JSON.parseObject(result);
+        assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
     }
 
     @Test
     public void testCollectionObjectCultureNLWithValidKey() {
         String url = baseURL + "/api/" + cultureNL + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
-        JSONObject json = JSON.parse(result);
-        assert json.get("artObject").get("objectNumber").equals(objectNumber);
+        JSONObject json = JSON.parseObject(result);
+        assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
     }
 
     @Test
     public void testInvalidCollectionObjectCultureNLWithValidKey() {
         String url = baseURL + "/api/" + cultureNL + "/collection?key="+key+"&objectNumber="+incorrectObjectNumber;
         String result = httpUtil.doGet(url);
-        JSONObject jsonObject = JSON.parse(result);
+        JSONObject jsonObject = JSON.parseObject(result);
         //Search with an invalid data and it should return not found, and count 0.
-        assert jsonObject.get("count").equals(0);
+        assert jsonObject.getIntValue("count") == 0;
     }
 
     @Test
     public void testInValidCollectionObjectCultureENWithValidKey() {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+incorrectObjectNumber;
         String result = httpUtil.doGet(url);
-        JSONObject jsonObject = JSON.parse(result);
+        JSONObject jsonObject = JSON.parseObject(result);
         //Search with an invalid data and it should return not found, and count 0.
-        assert jsonObject.get("count").equals(0);
+        assert jsonObject.getIntValue("count") == 0;
     }
 
     @Test
@@ -160,18 +160,18 @@ class RijksTestApplicationTests {
     public void testInvalidCollectionImageCultureENWithValidKey() {
         String url = baseURL + "/api/" + cultureEN + "/collection/" + incorrectObjectNumber + "/tiles?key="+key;
         String result = httpUtil.doGet(url);
-        JSONObject json = JSON.parse(result);
+        JSONObject json = JSON.parseObject(result);
         //Nothing found with the invalid object number, so it should return not levels with 0 elements
-        assert json.getJSONArray("levels").length() == 0;
+        assert json.getJSONArray("levels").isEmpty();
     }
 
     @Test
     public void testInvalidCollectionImageCultureNLWithValidKey() {
         String url = baseURL + "/api/" + cultureNL + "/collection/" + incorrectObjectNumber + "/tiles?key="+key;
         String result = httpUtil.doGet(url);
-        JSONObject json = JSON.parse(result);
+        JSONObject json = JSON.parseObject(result);
         //Nothing found with the invalid object number, so it should return not levels with 0 elements
-        assert json.getJSONArray("levels").length() == 0;
+        assert json.getJSONArray("levels").isEmpty();
     }
 
     @Test
