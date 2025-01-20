@@ -28,5 +28,5 @@
   - When request with invalid page*pageSize(4\*5000), the response is random *pageSize* usersets, I think it is better to return 0.
   - When request with invalid page*pageSize(2\*10000), the response is 0, it is different from the previous one.
 - Why does the collection APIs return in JSON format but the usersets APIs return in XML format?
-  - (Updated on 21:30 20/1/2025, it seems the IT team has fixed this issue, the API return in JSON format now.)
-- It looks like the IT team of RijksMuseum is working on issues fixing, I need to keep updating my code.
+  - (Updated on 21:30 20/1/2025), it seems the IT team has fixed this issue, the API return in JSON format now.)
+- (Updated on 21:30 20/1/2025)It looks like the IT team of RijksMuseum is working on issues fixing, I need to keep updating my code.

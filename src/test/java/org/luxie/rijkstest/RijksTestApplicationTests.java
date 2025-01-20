@@ -222,16 +222,29 @@ class RijksTestApplicationTests {
     public void testUsersetsCultureENWithValidKeyWithPageAndPageSizeNotGreaterThan10000() {
         String url = baseURL + "/api/" + cultureEN + "/usersets/?key="+key+"&format=json&page="+page+"&pageSize="+pageSize;
         String result = httpUtil.doGet(url);
-        int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSets");
-        assert domResult == pageSize;
+        System.out.println(url);
+        //int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSets");
+        //At the beginning, they are using XML, now they are using JSON
+        JSONObject json = JSON.parseObject(result);
+        if(json.containsKey("userSets")){
+            assert json.getJSONArray("userSets").size() == pageSize;
+        } else {
+            assert false;
+        }
     }
 
     @Test
     public void testUsersetsCultureNLWithValidKeyWithPageAndPageSizeNotGreaterThan10000() {
         String url = baseURL + "/api/" + cultureNL + "/usersets/?key="+key+"&format=json&page="+page+"&pageSize="+pageSecondSize;;
         String result = httpUtil.doGet(url);
-        int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSets");
-        assert domResult == pageSecondSize;
+        System.out.println(url);
+        JSONObject json = JSON.parseObject(result);
+        //int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSets");
+        if(json.containsKey("userSets")){
+            assert json.getJSONArray("userSets").size() == pageSize;
+        } else {
+            assert false;
+        }
     }
 
     @Test
