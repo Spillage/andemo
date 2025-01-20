@@ -272,21 +272,27 @@ class RijksTestApplicationTests {
             String result = httpUtil.doGet(url);
             switch (v) {
                 case "Identify":
+                    LOGGER.debug("Identify");
                     assert result.contains("Identify");
                     break;
                 case "ListMetadataFormats":
+                    LOGGER.debug("ListMetadataFormats");
                     assert result.contains("ListMetadataFormats");
                     break;
                 case "ListSets":
+                    LOGGER.debug("ListSets");
                     assert result.contains("ListSets");
                     break;
                 case "ListIdentifiers":
+                    LOGGER.debug("ListIdentifiers");
                     assert result.contains("ListIdentifiers");
                     break;
                 case "ListRecords":
+                    LOGGER.debug("ListRecords");
                     assert result.contains("ListRecords");
                     break;
                 case "GetRecord":
+                    LOGGER.debug("GetRecord");
                     assert result.contains("GetRecord");
                     break;
                 default:
@@ -308,7 +314,6 @@ class RijksTestApplicationTests {
             long duration = endTime - startTime;
             assert duration < 1000;
             LOGGER.debug("Duration: " + duration + "ms");
-
         }
     }
 }
