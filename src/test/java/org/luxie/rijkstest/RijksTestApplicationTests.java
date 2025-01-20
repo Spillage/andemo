@@ -27,6 +27,9 @@ class RijksTestApplicationTests {
     @Value("${base.key}")
     private String key;
 
+    @Value("${base.incorrect.key}")
+    private String incorrectKey;
+
     @Value("${base.object.number}")
     private String objectNumber;
 
@@ -46,14 +49,14 @@ class RijksTestApplicationTests {
 
     @Test
     public void testCollectionsCultureENWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&involvedMaker=Rembrandt+van+Rijn";
+        String url = baseURL + "/api/" + cultureEN + "/collection?key="+incorrectKey+"&involvedMaker=Rembrandt+van+Rijn";
         String result = httpUtil.doGet(url);
         assert result.contains("Invalid key");
     }
 
     @Test
     public void testCollectionsCultureNLWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureNL + "/collection?key="+key+"&involvedMaker=Rembrandt+van+Rijn";
+        String url = baseURL + "/api/" + cultureNL + "/collection?key="+incorrectKey+"&involvedMaker=Rembrandt+van+Rijn";
         String result = httpUtil.doGet(url);
         assert result.contains("Invalid key");
     }
@@ -74,14 +77,14 @@ class RijksTestApplicationTests {
 
     @Test
     public void testCollectionObjectCultureENWithInValidKey() {
-        String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;
+        String url = baseURL + "/api/" + cultureEN + "/collection?key="+incorrectKey+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
         assert result.contains("Invalid key");
     }
 
     @Test
     public void testCollectionObjectCultureNLWithInValidKey() {
-        String url = baseURL + "/api/" + cultureNL + "/collection?key="+key+"&objectNumber="+objectNumber;
+        String url = baseURL + "/api/" + cultureNL + "/collection?key="+incorrectKey+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
         assert result.contains("Invalid key");
     }
@@ -116,30 +119,30 @@ class RijksTestApplicationTests {
 
     @Test
     public void testCollectionImageCultureENWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureEN + "/collection/" + objectNumber + "/tiles?key="+key;
+        String url = baseURL + "/api/" + cultureEN + "/collection/" + objectNumber + "/tiles?key="+incorrectKey;
         String result = httpUtil.doGet(url);
         assert result.contains("Invalid key");
     }
 
     @Test
     public void testCollectionImageCultureNLWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureNL + "/collection/" + objectNumber + "/tiles?key="+key;
+        String url = baseURL + "/api/" + cultureNL + "/collection/" + objectNumber + "/tiles?key="+incorrectKey;
         String result = httpUtil.doGet(url);
         assert result.contains("Invalid key");
     }
 
     @Test
     public void testUsersetsCultureENWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureEN + "/usersets/?key="+key+"&format=json&page="+page;
+        String url = baseURL + "/api/" + cultureEN + "/usersets/?key="+incorrectKey+"&format=json&page="+page;
         String result = httpUtil.doGet(url);
-        assert result.contains("Invalid key");
+        assert result.contains("invalid key");
     }
 
     @Test
     public void testUsersetsCultureNLWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureNL + "/usersets/?key="+key+"&format=json&page="+page;
+        String url = baseURL + "/api/" + cultureNL + "/usersets/?key="+incorrectKey+"&format=json&page="+page;
         String result = httpUtil.doGet(url);
-        assert result.contains("Invalid key");
+        assert result.contains("invalid key");
     }
 
     @Test
@@ -172,16 +175,16 @@ class RijksTestApplicationTests {
 
     @Test
     public void testUsersetDetailCultureENWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureEN + "/usersets/" + usersetId + "?key="+key+"&format=json";
+        String url = baseURL + "/api/" + cultureEN + "/usersets/" + usersetId + "?key="+incorrectKey+"&format=json";
         String result = httpUtil.doGet(url);
-        assert result.contains("Invalid key");
+        assert result.contains("invalid key");
     }
 
     @Test
     public void testUsersetDetailCultureNLWithInvalidKey() {
-        String url = baseURL + "/api/" + cultureNL + "/usersets/" + usersetId + "?key="+key+"&format=json";
+        String url = baseURL + "/api/" + cultureNL + "/usersets/" + usersetId + "?key="+incorrectKey+"&format=json";
         String result = httpUtil.doGet(url);
-        assert result.contains("Invalid key");
+        assert result.contains("invalid key");
     }
 
     @Test
@@ -207,6 +210,7 @@ class RijksTestApplicationTests {
             long duration = endTime - startTime;
             assert duration < 1000;
             LOGGER.debug("Duration: " + duration + "ms");
+
         }
     }
 }
