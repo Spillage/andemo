@@ -60,7 +60,7 @@ class RijksTestApplicationTests {
     private String OAIPMHVerbs;
 
     HttpUtil httpUtil = new HttpUtil();
-    DOMUtil domUtil = new DOMUtil();
+    //DOMUtil domUtil = new DOMUtil();
 
     @Test
     public void testCollectionsCultureENWithInvalidKey() {
