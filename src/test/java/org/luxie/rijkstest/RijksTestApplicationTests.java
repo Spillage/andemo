@@ -59,6 +59,9 @@ class RijksTestApplicationTests {
     @Value("${base.OAIPMH.verbs}")
     private String OAIPMHVerbs;
 
+    @Value("${base.OAIPMH.incorrect.verb}")
+    private String OAIPMHIncorrectVerb;
+
     HttpUtil httpUtil = new HttpUtil();
     //DOMUtil domUtil = new DOMUtil();
 
@@ -112,9 +115,10 @@ class RijksTestApplicationTests {
     public void testCollectionObjectCultureENWithValidKey() {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
+        System.out.println(url);
         JSONObject json = JSON.parseObject(result);
         if(json.containsKey("artObjects")){
-            System.out.println(json);
+            //It returns all items which objectNumber starts with BK-NM
             assert json.getJSONArray("artObjects").getObject(0, JSONObject.class).getString("objectNumber").equals(objectNumber);
         } else {
             assert false;
@@ -127,6 +131,7 @@ class RijksTestApplicationTests {
         String result = httpUtil.doGet(url);
         JSONObject json = JSON.parseObject(result);
         if(json.containsKey("artObjects")){
+            //It returns all items which objectNumber starts with BK-NM
             assert json.getJSONArray("artObjects").getObject(0, JSONObject.class).getString("objectNumber").equals(objectNumber);
         } else {
             assert false;
@@ -147,7 +152,8 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+incorrectObjectNumber;
         String result = httpUtil.doGet(url);
         JSONObject jsonObject = JSON.parseObject(result);
-        //Search with an invalid data and it should return not found, and count 0.
+        System.out.println(jsonObject);
+        //Search with an invalid data and it should return not found or count = 0, but now it returns all items.
         assert jsonObject.getIntValue("count") == 0;
     }
 
@@ -241,8 +247,9 @@ class RijksTestApplicationTests {
         System.out.println(url);
         JSONObject json = JSON.parseObject(result);
         //int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSets");
+        //Previous version is using XML, now they are using JSON
         if(json.containsKey("userSets")){
-            assert json.getJSONArray("userSets").size() == pageSize;
+            assert json.getJSONArray("userSets").size() == pageSecondSize;
         } else {
             assert false;
         }
@@ -327,33 +334,40 @@ class RijksTestApplicationTests {
             String result = httpUtil.doGet(url);
             switch (v) {
                 case "Identify":
-                    LOGGER.debug("Identify");
+                    LOGGER.info("Identify");
                     assert result.contains("Identify");
                     break;
                 case "ListMetadataFormats":
-                    LOGGER.debug("ListMetadataFormats");
+                    LOGGER.info("ListMetadataFormats");
                     assert result.contains("ListMetadataFormats");
                     break;
                 case "ListSets":
-                    LOGGER.debug("ListSets");
+                    LOGGER.info("ListSets");
                     assert result.contains("ListSets");
                     break;
                 case "ListIdentifiers":
-                    LOGGER.debug("ListIdentifiers");
+                    LOGGER.info("ListIdentifiers");
                     assert result.contains("ListIdentifiers");
                     break;
                 case "ListRecords":
-                    LOGGER.debug("ListRecords");
+                    LOGGER.info("ListRecords");
                     assert result.contains("ListRecords");
                     break;
                 case "GetRecord":
-                    LOGGER.debug("GetRecord");
+                    LOGGER.info("GetRecord");
                     assert result.contains("GetRecord");
                     break;
                 default:
                     assert false;
             }
         }
+    }
+
+    @Test
+    public void testOAI_PMHInvalidVerb() {
+        String url = OAIPMHurl + "?verb=" + OAIPMHIncorrectVerb;
+        String result = httpUtil.doGet(url);
+        assert result.contains("badVerb");
     }
 
     @Test
