@@ -115,7 +115,6 @@ class RijksTestApplicationTests {
     public void testCollectionObjectCultureENWithValidKey() {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
-        System.out.println(url);
         JSONObject json = JSON.parseObject(result);
         if(json.containsKey("artObjects")){
             //It returns all items which objectNumber starts with BK-NM
@@ -152,7 +151,6 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+incorrectObjectNumber;
         String result = httpUtil.doGet(url);
         JSONObject jsonObject = JSON.parseObject(result);
-        System.out.println(jsonObject);
         //Search with an invalid data and it should return not found or count = 0, but now it returns all items.
         assert jsonObject.getIntValue("count") == 0;
     }
@@ -229,7 +227,6 @@ class RijksTestApplicationTests {
     public void testUsersetsCultureENWithValidKeyWithPageAndPageSizeNotGreaterThan10000() {
         String url = baseURL + "/api/" + cultureEN + "/usersets/?key="+key+"&format=json&page="+page+"&pageSize="+pageSize;
         String result = httpUtil.doGet(url);
-        System.out.println(url);
         //int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSets");
         //At the beginning, they are using XML, now they are using JSON
         JSONObject json = JSON.parseObject(result);
@@ -244,7 +241,6 @@ class RijksTestApplicationTests {
     public void testUsersetsCultureNLWithValidKeyWithPageAndPageSizeNotGreaterThan10000() {
         String url = baseURL + "/api/" + cultureNL + "/usersets/?key="+key+"&format=json&page="+page+"&pageSize="+pageSecondSize;;
         String result = httpUtil.doGet(url);
-        System.out.println(url);
         JSONObject json = JSON.parseObject(result);
         //int domResult = domUtil.parseXMLStringAndReturnElementCount(result, "userSets");
         //Previous version is using XML, now they are using JSON
