@@ -30,3 +30,4 @@
 - Why does the collection APIs return in JSON format but the usersets APIs return in XML format?
   - (Updated on 21:30 20/1/2025), it seems the IT team has fixed this issue, the API return in JSON format now.)
 - (Updated on 21:30 20/1/2025)It looks like the IT team of RijksMuseum is working on issues fixing, I need to keep updating my code.
+- (Updated on 10:30 21/1/2025) It looks like the verbs"Identity" changed to "Identify" on the document.
