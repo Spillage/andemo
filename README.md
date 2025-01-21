@@ -18,7 +18,7 @@
 - The entire website is not separated from the front and back ends
 - By going through the performance test of the website, every 10 times of request got a response time almost 300 ms, and the others in almost 30 ms.
 - For '/api/{culture}/{object-number}':
-  - When search with a certain object number, it returns all collection objects but not the requested one, I think it is not expected.
+  - When search with a certain object number, it returns all collection objects but not the requested one, I think it is not expected.(fixed, check on 21/1/2025)
   - When search with an invalid object number, it returns all collection objects but not the requested one, I think it is not expected.
 - For '/api{culture}/collection/{object-number}/tiles'
   - When search with an invalid object number, it returns 403, it is better to return 404 or a "not found" message.

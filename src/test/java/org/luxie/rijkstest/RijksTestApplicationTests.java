@@ -113,8 +113,9 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureEN + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
         JSONObject json = JSON.parseObject(result);
-        if(json.containsKey("artObject")){
-            assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
+        if(json.containsKey("artObjects")){
+            System.out.println(json);
+            assert json.getJSONArray("artObjects").getObject(0, JSONObject.class).getString("objectNumber").equals(objectNumber);
         } else {
             assert false;
         }
@@ -125,8 +126,8 @@ class RijksTestApplicationTests {
         String url = baseURL + "/api/" + cultureNL + "/collection?key="+key+"&objectNumber="+objectNumber;
         String result = httpUtil.doGet(url);
         JSONObject json = JSON.parseObject(result);
-        if(json.containsKey("artObject")){
-            assert json.getJSONObject("artObject").getString("objectNumber").equals(objectNumber);
+        if(json.containsKey("artObjects")){
+            assert json.getJSONArray("artObjects").getObject(0, JSONObject.class).getString("objectNumber").equals(objectNumber);
         } else {
             assert false;
         }
@@ -367,7 +368,7 @@ class RijksTestApplicationTests {
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
             assert duration < 1000;
-            LOGGER.debug("Duration: " + duration + "ms");
+            LOGGER.info("Duration: " + duration + "ms");
         }
     }
 }
