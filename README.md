@@ -1,5 +1,8 @@
 # ReadMe
 
+## How to run the project
+- mvn clean testgi
+
 ## Some conclusions
 
 - It seems like not all APIs share the same filter or interceptor for key checking.
