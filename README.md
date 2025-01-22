@@ -1,7 +1,7 @@
 # ReadMe
 
 ## How to run the project
-- mvn clean testgi
+- mvn clean test
 
 ## Some conclusions
 
