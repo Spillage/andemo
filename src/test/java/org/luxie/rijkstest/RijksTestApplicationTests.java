@@ -374,6 +374,7 @@ class RijksTestApplicationTests {
             int temp = random.nextInt(verb.length);
             String url = OAIPMHurl + "?verb=" + verb[temp];
             long startTime = System.currentTimeMillis();
+            String result = httpUtil.doGet(url);
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
             assert duration < 1000;
